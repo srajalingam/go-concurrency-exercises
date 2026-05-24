@@ -3,10 +3,19 @@ package main
 import (
 	"io"
 	"log"
+	"net"
+	"os"
 )
 
 func main() {
-	// TODO: connect to server on localhost port 8000
+	// connect to server on localhost port 8080
+	conn, err := net.Dial("tcp", "localhost:8080")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+	// read response from server and print to stdout
+	mustCopy(os.Stdout, conn)
 
 }
 
