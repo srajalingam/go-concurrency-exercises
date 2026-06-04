@@ -9,7 +9,7 @@ func main() {
 	ch2 := make(chan string)
 
 	go func() {
-		time.Sleep(1 * time.Second)
+		time.Sleep(3 * time.Second)
 		ch1 <- "one"
 	}()
 
@@ -18,6 +18,20 @@ func main() {
 		ch2 <- "two"
 	}()
 
-	// TODO: multiplex recv on channel - ch1, ch2
+	// Use select to wait for messages from both channels
+	//DESCRIPTION: Use select to wait for messages from both channels and print them as they arrive.
+	for i := 0; i < 2; i++ {
+		select {
+		case msg1 := <-ch1:
+			println("Received from ch1:", msg1)
+		case msg2 := <-ch2:
+			println("Received from ch2:", msg2)
+		}
+	}
 
+	// msg1 := <-ch1
+	// println("Received from ch1:", msg1)
+
+	// msg2 := <-ch2
+	// println("Received from ch2:", msg2)
 }
