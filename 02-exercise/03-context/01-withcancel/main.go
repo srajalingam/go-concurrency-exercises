@@ -21,8 +21,7 @@ func main() {
 				select {
 				case <-ctx.Done():
 					return
-				default:
-					ch <- i
+				case ch <- i:
 				}
 			}
 		}()
